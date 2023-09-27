@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nfrom odoo import models, fields, api\n\nclass LibraryBookCateg(models.Model):\n    _name = 'library.book.category'\n    _description = 'Book Category'\n    _parent_store = True\n    name = fields.Char(required=True, translate=True)\n    parent_id = fields.Many2one('library.book.category', 'Parent Category', index=True)\n    parent_path = fields.Char(index=True)\n    child_ids = fields.One2many('library.book.category', 'parent_id', 'Subcategories')\n\nclass LibraryBook(models.Model):\n    _name = 'library.book'\n    _description = 'Book'\n    name = fields.Char('Title', required=True, index=True)\n    date_release = fields.Date('Release Date')\n    author_ids = fields.Many2many('res.partner', string='Authors')\n    category_id = fields.Many2one('library.book.category', 'Category', required=True, ondelete='restrict')\n    description = fields.Html('Description', sanitize=True, strip_style=False)\n    cover = fields.Binary('Book Cover')\n\nclass LibraryMember(models.Model):\n    _name = 'library.member'\n    _inherits = {'res.partner': 'partner_id'}\n    partner_id = fields.Many2one('res.partner', 'Partner', required=True, ondelete='cascade')\n    date_start = fields.Date('Member Since')\n    date_end = fields.Date('Termination Date')\n    member_number = fields.Char()"
+    }
+  ],
+  "created": 1685621214,
+  "id": "cmpl-7MbMspDRjmYM5yelf9s5YfufG7S8U",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 391,
+    "prompt_tokens": 82,
+    "total_tokens": 473
+  }
+}
